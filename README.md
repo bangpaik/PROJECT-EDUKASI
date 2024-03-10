@@ -1,2 +1,0 @@
-# PROJECT-EDUKASI
- Mini Case Tim 5
