@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'login_screen.dart'; // Import dart:convert untuk menggunakan json.decode
+import 'login_screen.dart';
 
 class DaftarScreen extends StatelessWidget {
   final TextEditingController namaController = TextEditingController();
@@ -24,10 +24,8 @@ class DaftarScreen extends StatelessWidget {
     );
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = json.decode(response.body); // Gunakan json.decode untuk mengurai respons
+      final Map<String, dynamic> responseData = json.decode(response.body);
       if (responseData['status'] == 'success') {
-        // Pendaftaran berhasil
-        // Tampilkan dialog bahwa pengguna sudah terdaftar
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -36,8 +34,7 @@ class DaftarScreen extends StatelessWidget {
             actions: <Widget>[
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop(); // Tutup dialog
-                  // Navigasi ke halaman login_screen
+                  Navigator.of(context).pop();
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -49,7 +46,6 @@ class DaftarScreen extends StatelessWidget {
           ),
         );
       } else {
-        // Pendaftaran gagal, tampilkan pesan kesalahan
         showDialog(
           context: context,
           builder: (context) {
@@ -67,7 +63,6 @@ class DaftarScreen extends StatelessWidget {
         );
       }
     } else {
-      // Jika terjadi kesalahan dalam komunikasi dengan server, tampilkan pesan error
       showDialog(
         context: context,
         builder: (context) {
@@ -95,42 +90,59 @@ class DaftarScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: namaController,
-              decoration: InputDecoration(
-                labelText: 'Nama',
-              ),
+        child: Card(
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 350,
+                  // height: 250,
+                  // color: Colors.white,
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: namaController,
+                  decoration: InputDecoration(
+                    labelText: 'Nama',
+                    prefixIcon: Icon(Icons.person),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: nobpController,
+                  decoration: InputDecoration(
+                    labelText: 'Nomor BP',
+                    prefixIcon: Icon(Icons.confirmation_number),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: nohpController,
+                  decoration: InputDecoration(
+                    labelText: 'Nomor HP',
+                    prefixIcon: Icon(Icons.phone),
+                  ),
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email),
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () => _daftar(context),
+                  child: Text('Daftar'),
+                ),
+              ],
             ),
-            SizedBox(height: 20),
-            TextField(
-              controller: nobpController,
-              decoration: InputDecoration(
-                labelText: 'Nomor BP',
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              controller: nohpController,
-              decoration: InputDecoration(
-                labelText: 'Nomor HP',
-              ),
-            ),
-            SizedBox(height: 20),
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _daftar(context),
-              child: Text('Daftar'),
-            ),
-          ],
+          ),
         ),
       ),
     );
