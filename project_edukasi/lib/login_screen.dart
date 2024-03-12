@@ -33,9 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Image.asset(
                   'assets/images/logo.png',
-                  width: 350,
-                  // height: 250,
-                  // color: Colors.white,
+                  width: 250,
+                  height: 200,
                 ),
                 SizedBox(height: 30.0),
                 TextFormField(

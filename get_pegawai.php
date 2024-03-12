@@ -1,8 +1,6 @@
 <?php
 include "koneksi.php";
 
-// Set header untuk mengizinkan akses dari domain yang berbeda
-// header("Access-Control-Allow-Origin: http://localhost:10461");
 header("Access-Control-Allow-Origin: header");
 header("Access-Control-Allow-Origin: *");
 

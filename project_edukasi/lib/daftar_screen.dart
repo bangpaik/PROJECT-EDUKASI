@@ -94,53 +94,55 @@ class DaftarScreen extends StatelessWidget {
           elevation: 5,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/logo.png',
-                  width: 350,
-                  // height: 250,
-                  // color: Colors.white,
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: namaController,
-                  decoration: InputDecoration(
-                    labelText: 'Nama',
-                    prefixIcon: Icon(Icons.person),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/logo.png',
+                    // width: 350,
+                    height: 150,
+                    // color: Colors.white,
                   ),
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: nobpController,
-                  decoration: InputDecoration(
-                    labelText: 'Nomor BP',
-                    prefixIcon: Icon(Icons.confirmation_number),
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: namaController,
+                    decoration: InputDecoration(
+                      labelText: 'Nama',
+                      prefixIcon: Icon(Icons.person),
+                    ),
                   ),
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: nohpController,
-                  decoration: InputDecoration(
-                    labelText: 'Nomor HP',
-                    prefixIcon: Icon(Icons.phone),
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: nobpController,
+                    decoration: InputDecoration(
+                      labelText: 'Nomor BP',
+                      prefixIcon: Icon(Icons.confirmation_number),
+                    ),
                   ),
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    prefixIcon: Icon(Icons.email),
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: nohpController,
+                    decoration: InputDecoration(
+                      labelText: 'Nomor HP',
+                      prefixIcon: Icon(Icons.phone),
+                    ),
                   ),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () => _daftar(context),
-                  child: Text('Daftar'),
-                ),
-              ],
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      prefixIcon: Icon(Icons.email),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => _daftar(context),
+                    child: Text('Daftar'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

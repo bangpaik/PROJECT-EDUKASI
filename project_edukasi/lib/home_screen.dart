@@ -5,6 +5,7 @@ import 'login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'profile_screen.dart';
 import 'gallery_screen.dart';
+import 'pegawai_screen.dart';
 
 class Berita {
   final String judul;
@@ -100,6 +101,13 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => GalleryScreen()),
+    );
+  }
+
+  Future<void> pegawai() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PegawaiScreen()),
     );
   }
 
@@ -207,37 +215,55 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FloatingActionButton.extended(
-                onPressed: profile,
-                icon: Icon(Icons.person),
-                label: Text(
-                  'Profile',
-                  style: TextStyle(color: Colors.black),
+              Expanded(
+                child: FloatingActionButton.extended(
+                  onPressed: profile,
+                  icon: Icon(Icons.person),
+                  label: Text(
+                    'Profile',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  backgroundColor: Colors.white,
                 ),
-                backgroundColor: Colors.white,
               ),
-              FloatingActionButton.extended(
-                onPressed: gallery,
-                icon: Icon(Icons.image),
-                label: Text(
-                  'Gallery',
-                  style: TextStyle(color: Colors.black),
+              Expanded(
+                child: FloatingActionButton.extended(
+                  onPressed: pegawai,
+                  icon: Icon(Icons.people),
+                  label: Text(
+                    'Pegawai',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  backgroundColor: Colors.white,
                 ),
-                backgroundColor: Colors.white,
               ),
-              FloatingActionButton.extended(
-                onPressed: logout,
-                icon: Icon(Icons.logout),
-                label: Text(
-                  'Logout',
-                  style: TextStyle(color: Colors.black),
+              Expanded(
+                child: FloatingActionButton.extended(
+                  onPressed: gallery,
+                  icon: Icon(Icons.image),
+                  label: Text(
+                    'Gallery',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  backgroundColor: Colors.white,
                 ),
-                backgroundColor: Colors.white,
+              ),
+              Expanded(
+                child: FloatingActionButton.extended(
+                  onPressed: logout,
+                  icon: Icon(Icons.logout),
+                  label: Text(
+                    'Logout',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  backgroundColor: Colors.white,
+                ),
               ),
             ],
           ),
         ),
       ),
+
     );
   }
 }
