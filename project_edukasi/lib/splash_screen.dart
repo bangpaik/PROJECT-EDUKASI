@@ -27,11 +27,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Menunda pindah ke halaman utama setelah 2 detik
+
     Future.delayed(Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()), // Ganti dengan halaman utama aplikasi
+        MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     });
   }

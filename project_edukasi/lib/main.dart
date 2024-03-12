@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_edukasi/splash_screen.dart'; // Ganti dengan lokasi file splash_screen.dart
+import 'package:project_edukasi/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(), // Mengarah ke SplashScreen sebagai halaman awal
+      home: SplashScreen(),
     );
   }
 }

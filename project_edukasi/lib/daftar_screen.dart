@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // Import dart:convert untuk menggunakan json.decode
+import 'dart:convert';
+
+import 'login_screen.dart'; // Import dart:convert untuk menggunakan json.decode
 
 class DaftarScreen extends StatelessWidget {
   final TextEditingController namaController = TextEditingController();
@@ -9,7 +11,7 @@ class DaftarScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
 
   Future<void> _daftar(BuildContext context) async {
-    final String url = 'http://192.168.0.220/PROJECT-EDUKASI/daftar.php';
+    final String url = 'https://tim5.trigofi.id/daftar.php';
 
     final response = await http.post(
       Uri.parse(url),
@@ -25,14 +27,27 @@ class DaftarScreen extends StatelessWidget {
       final Map<String, dynamic> responseData = json.decode(response.body); // Gunakan json.decode untuk mengurai respons
       if (responseData['status'] == 'success') {
         // Pendaftaran berhasil
-        // Tampilkan toast "anda sudah terdaftar"
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+        // Tampilkan dialog bahwa pengguna sudah terdaftar
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Pendaftaran Berhasil'),
             content: Text('Anda sudah terdaftar'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Tutup dialog
+                  // Navigasi ke halaman login_screen
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                },
+                child: Text('OK'),
+              ),
+            ],
           ),
         );
-        // Navigasi ke halaman login_screen
-        Navigator.pushReplacementNamed(context, '/login');
       } else {
         // Pendaftaran gagal, tampilkan pesan kesalahan
         showDialog(

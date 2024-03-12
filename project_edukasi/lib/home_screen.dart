@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'login_screen.dart'; // Import halaman login_screen.dart
-import 'package:shared_preferences/shared_preferences.dart'; // Import shared_preferences
+import 'login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'profile_screen.dart';
 
 class Berita {
   final String judul;
@@ -31,7 +32,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late List<Berita> beritaList;
-  late List<Berita> filteredBeritaList; // Tambahkan filteredBeritaList
+  late List<Berita> filteredBeritaList;
   bool isLoading = false;
   String? namaUser;
   TextEditingController searchController = TextEditingController();
@@ -41,13 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     fetchData();
     getUsername();
-    filteredBeritaList = []; // Inisialisasi filteredBeritaList
+    filteredBeritaList = [];
   }
 
   Future<void> getUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      namaUser = prefs.getString('email');
+      namaUser = prefs.getString('nama');
     });
   }
 
@@ -57,13 +58,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     try {
-      final response = await http.get(Uri.parse('http://192.168.0.220/PROJECT-EDUKASI/get_berita.php'));
+      final response = await http.get(Uri.parse('https://tim5.trigofi.id/get_berita.php'));
 
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body)['data'];
         setState(() {
           beritaList = responseData.map((item) => Berita.fromJson(item)).toList();
-          filteredBeritaList = beritaList; // Isi filteredBeritaList dengan beritaList awal
+          filteredBeritaList = List.from(beritaList);
           isLoading = false;
         });
       } else {
@@ -80,14 +81,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
+    getUsername();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
 
+  Future<void> profile() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ProfileScreen()),
+    );
+  }
+
   void searchBerita(String query) {
-    // Lakukan pencarian berita sesuai dengan nilai yang dimasukkan
     setState(() {
       filteredBeritaList = beritaList.where((berita) {
         return berita.judul.toLowerCase().contains(query.toLowerCase());
@@ -129,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 hintText: 'Cari berita...',
               ),
               onChanged: (value) {
-                searchBerita(value); // Panggil fungsi pencarian saat teks berubah
+                searchBerita(value);
               },
             ),
           ),
@@ -174,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   leading: CircleAvatar(
                     backgroundColor: Colors.black,
                     backgroundImage: NetworkImage(
-                      'http://192.168.147.42/PROJECT-EDUKASI/gambar/${filteredBeritaList[index].gambar}',
+                      'https://tim5.trigofi.id/gambar/${filteredBeritaList[index].gambar}',
                     ),
                   ),
                 );
@@ -188,8 +196,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              FloatingActionButton.extended(
+                onPressed: profile,
+                icon: Icon(Icons.person),
+                label: Text(
+                  'Profile',
+                  style: TextStyle(color: Colors.black),
+                ),
+                backgroundColor: Colors.white,
+              ),
               FloatingActionButton.extended(
                 onPressed: logout,
                 icon: Icon(Icons.logout),
@@ -230,7 +247,7 @@ class DetailScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 16.0),
               ),
               SizedBox(height: 20),
-              // Tambahkan informasi lain yang diperlukan di sini
+
             ],
           ),
         ),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'home_screen.dart'; // Import halaman home_screen.dart
-import 'daftar_screen.dart'; // Import halaman daftar_screen.dart
+import 'home_screen.dart';
+import 'daftar_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
               controller: nobpController,
               decoration: InputDecoration(
-                labelText: 'NOBP',
+                labelText: 'No BP',
               ),
             ),
             SizedBox(height: 32.0),
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.0.220/PROJECT-EDUKASI/login.php'),
+        Uri.parse('https://tim5.trigofi.id/login.php'),
         body: {
           'email': email,
           'nobp': nobp,
@@ -85,17 +85,20 @@ class _LoginScreenState extends State<LoginScreen> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         if (responseData['status'] == 'success') {
-          // Login berhasil, simpan data sesi dan arahkan ke home_screen
+
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString('email', email);
           prefs.setString('nobp', nobp);
+          prefs.setString('nama', responseData['data']['nama']);
+          prefs.setString('nohp', responseData['data']['nohp']);
+          prefs.setString('id_user', responseData['data']['id_user']);
 
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => HomeScreen()),
           );
         } else {
-          // Login gagal, mungkin email atau NOBP salah
+
           showDialog(
             context: context,
             builder: (context) {
@@ -117,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (error) {
       print('Error: $error');
-      // Tampilkan pesan kesalahan
+
       showDialog(
         context: context,
         builder: (context) {
