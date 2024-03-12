@@ -193,6 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       'https://tim5.trigofi.id/gambar/${filteredBeritaList[index].gambar}',
                     ),
                   ),
+                  trailing: Text(filteredBeritaList[index].gambar), // Tampilkan nama gambar di sini
                 );
               },
             ),
@@ -264,7 +265,17 @@ class DetailScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 16.0),
               ),
               SizedBox(height: 20),
-
+              // Tampilkan gambar dari berita
+              Image.network(
+                'https://tim5.trigofi.id/gambar/${berita.gambar}',
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return CircularProgressIndicator();
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return Text('Failed to load image');
+                },
+              ),
             ],
           ),
         ),
