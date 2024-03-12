@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:connectivity/connectivity.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(GalleryApp());
@@ -25,14 +27,7 @@ class GalleryScreen extends StatefulWidget {
 }
 
 class _GalleryScreenState extends State<GalleryScreen> {
-  final List<String> imageUrls = [
-    "https://setkab.go.id/wp-content/uploads/2021/03/Screen-Shot-2021-02-20-at-21.53.28.jpg",
-    "https://setkab.go.id/wp-content/uploads/2021/03/Screen-Shot-2021-02-20-at-21.53.28.jpg",
-    "https://setkab.go.id/wp-content/uploads/2021/03/Screen-Shot-2021-02-20-at-21.53.28.jpg",
-    "https://setkab.go.id/wp-content/uploads/2021/03/Screen-Shot-2021-02-20-at-21.53.28.jpg",
-    "https://setkab.go.id/wp-content/uploads/2021/03/Screen-Shot-2021-02-20-at-21.53.28.jpg",
-    "https://setkab.go.id/wp-content/uploads/2021/03/Screen-Shot-2021-02-20-at-21.53.28.jpg",
-  ];
+  List<String> imageUrls = [];
 
   bool _isConnected = false;
 
@@ -40,6 +35,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
   void initState() {
     super.initState();
     _checkInternetConnection();
+    _fetchImageData();
   }
 
   Future<void> _checkInternetConnection() async {
@@ -55,6 +51,39 @@ class _GalleryScreenState extends State<GalleryScreen> {
       });
     }
   }
+
+  Future<void> _fetchImageData() async {
+    try {
+      final response = await http.get(Uri.parse('https://tim5.trigofi.id/get_gambar.php'));
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = json.decode(response.body)['data'];
+        List<String> urls = responseData.map((item) => 'https://tim5.trigofi.id/gambar/${item['gambar']}').toList();
+        setState(() {
+          imageUrls = urls;
+        });
+      } else {
+        throw Exception('Failed to load image data. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error: $error');
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to load image data.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {

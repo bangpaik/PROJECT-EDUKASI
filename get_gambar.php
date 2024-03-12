@@ -4,7 +4,7 @@ include "koneksi.php";
 header("Access-Control-Allow-Origin: header");
 header("Access-Control-Allow-Origin: *");
 
-$sql = "SELECT * FROM tb_berita";
+$sql = "SELECT * FROM tb_gambar";
 $result = $koneksi->query($sql);
 
 if ($result->num_rows > 0) {
