@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'profile_screen.dart';
+import 'gallery_screen.dart';
 
 class Berita {
   final String judul;
@@ -92,6 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ProfileScreen()),
+    );
+  }
+
+  Future<void> gallery() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => GalleryScreen()),
     );
   }
 
@@ -203,6 +211,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(Icons.person),
                 label: Text(
                   'Profile',
+                  style: TextStyle(color: Colors.black),
+                ),
+                backgroundColor: Colors.white,
+              ),
+              FloatingActionButton.extended(
+                onPressed: gallery,
+                icon: Icon(Icons.image),
+                label: Text(
+                  'Gallery',
                   style: TextStyle(color: Colors.black),
                 ),
                 backgroundColor: Colors.white,
