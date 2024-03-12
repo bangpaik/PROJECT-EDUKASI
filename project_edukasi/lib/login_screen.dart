@@ -24,42 +24,64 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: nobpController,
-              decoration: InputDecoration(
-                labelText: 'No BP',
-              ),
-            ),
-            SizedBox(height: 32.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: Card(
+          elevation: 5,
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 350,
+                  // height: 250,
+                  // color: Colors.white,
+                ),
+                SizedBox(height: 30.0),
+                TextFormField(
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                TextFormField(
+                  controller: nobpController,
+                  decoration: InputDecoration(
+                    labelText: 'No BP',
+                    prefixIcon: Icon(Icons.lock),
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
+                ),
+                SizedBox(height: 32.0),
                 ElevatedButton(
                   onPressed: isLoading ? null : () => _login(),
-                  child: isLoading ? CircularProgressIndicator() : Text('Login'),
+                  child: isLoading
+                      ? CircularProgressIndicator()
+                      : Text(
+                    'Login',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
-                ElevatedButton(
+                SizedBox(height: 16.0),
+                TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => DaftarScreen()),
                     );
                   },
-                  child: Text('Daftar'),
+                  child: Text(
+                    'Daftar',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -85,7 +107,6 @@ class _LoginScreenState extends State<LoginScreen> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = json.decode(response.body);
         if (responseData['status'] == 'success') {
-
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString('email', email);
           prefs.setString('nobp', nobp);
@@ -98,7 +119,6 @@ class _LoginScreenState extends State<LoginScreen> {
             MaterialPageRoute(builder: (context) => HomeScreen()),
           );
         } else {
-
           showDialog(
             context: context,
             builder: (context) {
