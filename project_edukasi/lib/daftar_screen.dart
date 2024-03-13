@@ -90,21 +90,20 @@ class DaftarScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Card(
-          elevation: 5,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Card(
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
                     'assets/images/logo.png',
-                    // width: 350,
-                    height: 150,
+                    width: 350,
+                    // height: 250,
                     // color: Colors.white,
                   ),
-                  SizedBox(height: 20),
                   TextField(
                     controller: namaController,
                     decoration: InputDecoration(

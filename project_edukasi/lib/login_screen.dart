@@ -25,18 +25,18 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Card(
-          elevation: 5,
+          elevation: 1,
           child: Padding(
             padding: EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
                 Image.asset(
                   'assets/images/logo.png',
                   width: 250,
                   height: 200,
                 ),
-                SizedBox(height: 30.0),
+                SizedBox(height: 15.0),
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
