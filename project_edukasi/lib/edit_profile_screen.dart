@@ -36,14 +36,27 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: Text('Profile'),
         backgroundColor: Colors.blue,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
+      body:  Padding(
+         padding: EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: NetworkImage(
+                    'https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295399_640.png',
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             TextField(
               controller: namaController,
               decoration: InputDecoration(labelText: 'Nama'),
@@ -83,6 +96,56 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
     );
   }
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: Text('Edit Profile'),
+  //       backgroundColor: Colors.blue,
+  //     ),
+  //     body: Padding(
+  //       padding: EdgeInsets.all(16.0),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.stretch,
+  //         children: [
+  //           TextField(
+  //             controller: namaController,
+  //             decoration: InputDecoration(labelText: 'Nama'),
+  //           ),
+  //           SizedBox(height: 16.0),
+  //           TextField(
+  //             controller: nobpController,
+  //             decoration: InputDecoration(labelText: 'No BP'),
+  //           ),
+  //           SizedBox(height: 16.0),
+  //           TextField(
+  //             controller: nohpController,
+  //             decoration: InputDecoration(labelText: 'No HP'),
+  //           ),
+  //           SizedBox(height: 32.0),
+  //           TextField(
+  //             controller: emailController,
+  //             decoration: InputDecoration(labelText: 'Email'),
+  //           ),
+  //           SizedBox(height: 16.0),
+  //           Text(
+  //             'ID User: $id_user',
+  //             style: TextStyle(
+  //               fontSize: 16.0,
+  //               fontWeight: FontWeight.bold,
+  //             ),
+  //           ),
+  //           SizedBox(height: 32.0),
+  //           ElevatedButton(
+  //             onPressed: () {
+  //               _editProfile();
+  //             },
+  //             child: Text('Simpan'),
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Future<void> _editProfile() async {
     final nama = namaController.text;
