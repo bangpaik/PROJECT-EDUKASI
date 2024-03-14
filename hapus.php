@@ -16,12 +16,12 @@ $result = mysqli_query($koneksi, $query);
 if ($result) {
     $response = array(
         'status' => 'success',
-        'message' => 'Data berhasil diupdate'
+        'message' => 'Data berhasil dihapus'
     );
 } else {
     $response = array(
         'status' => 'failed',
-        'message' => 'Gagal mengupdate data'
+        'message' => 'Gagal hapus data'
     );
 }
 
