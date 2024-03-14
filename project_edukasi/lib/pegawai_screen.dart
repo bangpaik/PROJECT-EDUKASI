@@ -1,9 +1,11 @@
+import 'login_screen.dart';
 import 'pegawaitambah_screen.dart';
 import 'pegawaiedit_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PegawaiScreen extends StatefulWidget {
   @override
@@ -15,13 +17,14 @@ class _PegawaiScreenState extends State<PegawaiScreen> {
   late List<Pegawai> filteredPegawaiList;
   bool isLoading = false;
   TextEditingController searchController = TextEditingController();
-
+  late String? id_user;
   @override
   void initState() {
     super.initState();
     fetchData();
     filteredPegawaiList = [];
-  }
+      }
+
 
   Future<void> fetchData() async {
     setState(() {
@@ -71,6 +74,55 @@ class _PegawaiScreenState extends State<PegawaiScreen> {
   }
 
   Future<void> hapusPegawai(String id, String nama) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? id_user = prefs.getString('id_user');
+
+    if (id_user == id) {
+      // Hapus data pengguna yang login dan lakukan logout
+      try {
+        final response = await http.post(
+          Uri.parse('https://tim5.trigofi.id/hapus.php'),
+          body: {'id': id},
+        );
+
+        if (response.statusCode == 200) {
+          final responseData = json.decode(response.body);
+          if (responseData['status'] == 'success') {
+            await prefs.clear(); // Hapus data login dari SharedPreferences
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text('Informasi'),
+                content: Text('Data Anda telah dihapus. Silahkan mendaftar kembali.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              ),
+            );
+            return; // Stop the execution flow after successful logout
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Gagal menghapus data')),
+            );
+          }
+        } else {
+          throw Exception('Failed to delete data. Status code: ${response.statusCode}');
+        }
+      } catch (error) {
+        print('Error: $error');
+      }
+    }
+
+    // Hapus data pegawai jika tidak ada masalah dengan ID
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -117,6 +169,8 @@ class _PegawaiScreenState extends State<PegawaiScreen> {
       ),
     );
   }
+
+
 
   @override
   Widget build(BuildContext context) {

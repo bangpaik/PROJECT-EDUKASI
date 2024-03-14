@@ -66,6 +66,29 @@ class _PegawaiEditScreenState extends State<PegawaiEditScreen> {
   }
 
   void simpanPerubahan() async {
+    // Validasi input
+    if (namaController.text.isEmpty ||
+        nobpController.text.isEmpty ||
+        nohpController.text.isEmpty ||
+        emailController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Peringatan'),
+            content: Text('Semua kolom harus diisi.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Stop the execution if any field is empty
+    }
+
     try {
       setState(() {
         isLoading = true;
@@ -126,6 +149,7 @@ class _PegawaiEditScreenState extends State<PegawaiEditScreen> {
       });
     }
   }
+
 
 
   @override

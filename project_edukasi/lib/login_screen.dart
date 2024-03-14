@@ -161,4 +161,30 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
+
+  // Tambahkan fungsi untuk menampilkan notifikasi saat data pengguna dihapus
+  void showDeletedUserDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Informasi'),
+          content: Text('Data Anda telah dihapus. Silahkan mendaftar kembali.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => DaftarScreen()),
+                );
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }

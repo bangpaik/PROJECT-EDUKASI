@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = false;
   String? namaUser;
   TextEditingController searchController = TextEditingController();
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -165,43 +166,49 @@ class _HomeScreenState extends State<HomeScreen> {
                 : ListView.builder(
               itemCount: filteredBeritaList.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(filteredBeritaList[index].judul),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${filteredBeritaList[index].konten.substring(0, 50)}...',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: 8),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailScreen(berita: filteredBeritaList[index]),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    elevation: 5,
+                    child: ListTile(
+                      title: Text(filteredBeritaList[index].judul),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${filteredBeritaList[index].konten.substring(0, 50)}...',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 8),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailScreen(berita: filteredBeritaList[index]),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Selengkapnya',
+                              style: TextStyle(color: Colors.white),
                             ),
-                          );
-                        },
-                        child: Text(
-                          'Selengkapnya',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.blue),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Colors.blue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.black,
+                        backgroundImage: NetworkImage(
+                          'https://tim5.trigofi.id/gambar/${filteredBeritaList[index].gambar}',
                         ),
                       ),
-                    ],
-                  ),
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.black,
-                    backgroundImage: NetworkImage(
-                      'https://tim5.trigofi.id/gambar/${filteredBeritaList[index].gambar}',
+                      trailing: Text(filteredBeritaList[index].gambar), // Tampilkan nama gambar di sini
                     ),
                   ),
-                  trailing: Text(filteredBeritaList[index].gambar), // Tampilkan nama gambar di sini
                 );
               },
             ),
@@ -215,55 +222,30 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: FloatingActionButton.extended(
-                  onPressed: profile,
-                  icon: Icon(Icons.person),
-                  label: Text(
-                    'Profile',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  backgroundColor: Colors.white,
-                ),
+              IconButton(
+                onPressed: profile,
+                icon: Icon(Icons.person),
+                color: Colors.white,
               ),
-              Expanded(
-                child: FloatingActionButton.extended(
-                  onPressed: pegawai,
-                  icon: Icon(Icons.people),
-                  label: Text(
-                    'Pegawai',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  backgroundColor: Colors.white,
-                ),
+              IconButton(
+                onPressed: pegawai,
+                icon: Icon(Icons.people),
+                color: Colors.white,
               ),
-              Expanded(
-                child: FloatingActionButton.extended(
-                  onPressed: gallery,
-                  icon: Icon(Icons.image),
-                  label: Text(
-                    'Gallery',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  backgroundColor: Colors.white,
-                ),
+              IconButton(
+                onPressed: gallery,
+                icon: Icon(Icons.image),
+                color: Colors.white,
               ),
-              Expanded(
-                child: FloatingActionButton.extended(
-                  onPressed: logout,
-                  icon: Icon(Icons.logout),
-                  label: Text(
-                    'Logout',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  backgroundColor: Colors.white,
-                ),
+              IconButton(
+                onPressed: logout,
+                icon: Icon(Icons.logout),
+                color: Colors.white,
               ),
             ],
           ),
         ),
       ),
-
     );
   }
 }
