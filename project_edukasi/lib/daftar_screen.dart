@@ -11,6 +11,29 @@ class DaftarScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
 
   Future<void> _daftar(BuildContext context) async {
+    // Validasi input data
+    if (namaController.text.isEmpty ||
+        nobpController.text.isEmpty ||
+        nohpController.text.isEmpty ||
+        emailController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Semua field harus diisi.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Hentikan proses jika ada field yang kosong
+    }
+
     final String url = 'https://tim5.trigofi.id/daftar.php';
 
     final response = await http.post(
@@ -101,8 +124,6 @@ class DaftarScreen extends StatelessWidget {
                   Image.asset(
                     'assets/images/logo.png',
                     width: 350,
-                    // height: 250,
-                    // color: Colors.white,
                   ),
                   TextField(
                     controller: namaController,
