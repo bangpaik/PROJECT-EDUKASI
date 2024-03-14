@@ -101,7 +101,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              // Handle image tap event
+              _showImagePopup(imageUrls[index]);
             },
             child: Card(
               elevation: 2.0,
@@ -109,6 +109,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   ? Image.network(
                 imageUrls[index],
                 fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
               )
                   : Center(
                 child: Text('No internet connection'),
@@ -117,6 +119,20 @@ class _GalleryScreenState extends State<GalleryScreen> {
           );
         },
       ),
+    );
+  }
+
+  void _showImagePopup(String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.contain,
+          ),
+        );
+      },
     );
   }
 }
