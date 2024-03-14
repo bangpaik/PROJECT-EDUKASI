@@ -96,56 +96,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
     );
   }
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('Edit Profile'),
-  //       backgroundColor: Colors.blue,
-  //     ),
-  //     body: Padding(
-  //       padding: EdgeInsets.all(16.0),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.stretch,
-  //         children: [
-  //           TextField(
-  //             controller: namaController,
-  //             decoration: InputDecoration(labelText: 'Nama'),
-  //           ),
-  //           SizedBox(height: 16.0),
-  //           TextField(
-  //             controller: nobpController,
-  //             decoration: InputDecoration(labelText: 'No BP'),
-  //           ),
-  //           SizedBox(height: 16.0),
-  //           TextField(
-  //             controller: nohpController,
-  //             decoration: InputDecoration(labelText: 'No HP'),
-  //           ),
-  //           SizedBox(height: 32.0),
-  //           TextField(
-  //             controller: emailController,
-  //             decoration: InputDecoration(labelText: 'Email'),
-  //           ),
-  //           SizedBox(height: 16.0),
-  //           Text(
-  //             'ID User: $id_user',
-  //             style: TextStyle(
-  //               fontSize: 16.0,
-  //               fontWeight: FontWeight.bold,
-  //             ),
-  //           ),
-  //           SizedBox(height: 32.0),
-  //           ElevatedButton(
-  //             onPressed: () {
-  //               _editProfile();
-  //             },
-  //             child: Text('Simpan'),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Future<void> _editProfile() async {
     final nama = namaController.text;

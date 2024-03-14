@@ -66,8 +66,21 @@ class _PegawaiTambahScreenState extends State<PegawaiTambahScreen> {
           child: Form(
             key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        'https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295399_640.png',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
                 TextFormField(
                   controller: _namaController,
                   decoration: InputDecoration(labelText: 'Nama'),
