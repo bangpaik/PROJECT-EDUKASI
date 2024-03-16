@@ -39,8 +39,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         title: Text('Profile'),
         backgroundColor: Colors.blue,
       ),
-      body:  Padding(
-         padding: EdgeInsets.all(16.0),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -103,6 +103,26 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final nohp = nohpController.text;
     final email = emailController.text;
 
+    // Validasi jika data kosong
+    if (nama.isEmpty || nobp.isEmpty || nohp.isEmpty || email.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Peringatan'),
+            content: Text('Semua data harus diisi.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Stop the execution flow
+    }
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       id_user = prefs.getString('id_user');
@@ -135,7 +155,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: Text('Success'),
+                title: Text('Berhasil'),
                 content: Text('Data berhasil diupdate.'),
                 actions: [
                   TextButton(
@@ -151,7 +171,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: Text('Error'),
+                title: Text('Gagal'),
                 content: Text('Gagal mengupdate data.'),
                 actions: [
                   TextButton(
@@ -164,7 +184,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           );
         }
       } else {
-        throw Exception('Failed to edit profile. Status code: ${response.statusCode}');
+        throw Exception(
+            'Gagal mengupdate data. Status code: ${response.statusCode}');
       }
     } catch (error) {
       print('Error: $error');
