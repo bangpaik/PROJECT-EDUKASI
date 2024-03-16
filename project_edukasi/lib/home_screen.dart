@@ -224,23 +224,27 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               IconButton(
                 onPressed: profile,
-                icon: Icon(Icons.person),
+                icon: Icon(Icons.person,),
                 color: Colors.white,
+                  tooltip: 'Profile'
               ),
               IconButton(
                 onPressed: pegawai,
                 icon: Icon(Icons.people),
                 color: Colors.white,
+                  tooltip: 'Pegawai'
               ),
               IconButton(
                 onPressed: gallery,
                 icon: Icon(Icons.image),
                 color: Colors.white,
+                  tooltip: 'Gallery'
               ),
               IconButton(
                 onPressed: logout,
                 icon: Icon(Icons.logout),
                 color: Colors.white,
+                  tooltip: 'Logout'
               ),
             ],
           ),
