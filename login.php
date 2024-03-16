@@ -1,7 +1,5 @@
 <?php
 include "koneksi.php";
-
-header("Access-Control-Allow-Origin: header");
 header("Access-Control-Allow-Origin: *");
 
 $email = $_POST['email'];

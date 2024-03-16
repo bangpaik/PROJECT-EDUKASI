@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '${filteredBeritaList[index].konten.substring(0, 50)}...',
+                            '${filteredBeritaList[index].konten.length > 50 ? filteredBeritaList[index].konten.substring(0, 50) + '...' : filteredBeritaList[index].konten}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
