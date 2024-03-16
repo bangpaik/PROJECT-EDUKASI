@@ -78,7 +78,7 @@ class _PegawaiScreenState extends State<PegawaiScreen> {
     String? id_user = prefs.getString('id_user');
 
     if (id_user == id) {
-      // Hapus data pengguna yang login dan lakukan logout
+      // Hapus data pengguna yang login
       try {
         final response = await http.post(
           Uri.parse('https://tim5.trigofi.id/hapus.php'),
@@ -88,16 +88,17 @@ class _PegawaiScreenState extends State<PegawaiScreen> {
         if (response.statusCode == 200) {
           final responseData = json.decode(response.body);
           if (responseData['status'] == 'success') {
-            await prefs.clear(); // Hapus data login dari SharedPreferences
+            // Tampilkan dialog notifikasi
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
                 title: Text('Informasi'),
-                content: Text('Data Anda telah dihapus. Silahkan mendaftar kembali.'),
+                content: Text('Data Anda telah dihapus. Anda akan logout otomatis dari aplikasi.'),
                 actions: [
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      // Logout pengguna setelah menekan tombol OK
+                      Navigator.of(context).pop(); // Tutup dialog
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -108,7 +109,7 @@ class _PegawaiScreenState extends State<PegawaiScreen> {
                 ],
               ),
             );
-            return; // Stop the execution flow after successful logout
+            return; // Stop the execution flow after successful deletion
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Gagal menghapus data')),
@@ -131,7 +132,7 @@ class _PegawaiScreenState extends State<PegawaiScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(); // Tutup dialog
             },
             child: Text('Batal'),
           ),
@@ -170,8 +171,7 @@ class _PegawaiScreenState extends State<PegawaiScreen> {
     );
   }
 
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
